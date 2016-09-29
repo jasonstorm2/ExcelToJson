@@ -43,6 +43,8 @@ public abstract class ExcelTo extends Thread {
 	
 	private int executeType = 2;//1：大领主编译表格模式 2：EVA编译表格模式
 	
+	
+	
 
 	public String pathConfFile; // 配置文件所在路径
 	public String pathExportFile; // 文件导出路径
