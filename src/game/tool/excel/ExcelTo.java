@@ -41,7 +41,7 @@ public abstract class ExcelTo extends Thread {
 	private final String  SUB = "sub";  //母表中子表的标志
 	private final String SUBSN = "subsn";//母表中子表sn标志
 	
-	private int executeType = 2;//1：大领主编译表格模式 2：EVA编译表格模式
+	private int executeType = 1;//1：大领主编译表格模式 2：EVA编译表格模式
 	
 	
 	
@@ -359,7 +359,13 @@ public abstract class ExcelTo extends Thread {
 		}
 		
 		/* 具体数据采集 */
-		resultsServer = (List<Map<Object, Object>>) getSheetData(sheet, null);
+		if (CSSign.equalsIgnoreCase("c")) {
+			resultsClient = (List<Map<Object, Object>>) getSheetData(sheet, null);
+		}else if(CSSign.equalsIgnoreCase("s")){
+			resultsServer = (List<Map<Object, Object>>) getSheetData(sheet, null);
+		}
+		
+		
 		System.out.println("");
 	}
 
@@ -533,7 +539,6 @@ public abstract class ExcelTo extends Thread {
 		} 
 
 		fieldNames.add(nameEn.toLowerCase());
-		System.out.println();
 		//子表的字段信息合并
 	}
 
@@ -1489,7 +1494,7 @@ public abstract class ExcelTo extends Thread {
 					this.convertDataByTypeAndSetIntoMap(serverMap, fieldNameEN, dateType, value);
 				}
 			}//for 列结束
-			if (cellValue.equals(subsn)) {
+			if (cellValue.equals(subsn)) {//子表所取的行数据
 				if(isServer){
 					subMap = serverMap;
 				}else{
@@ -1500,7 +1505,7 @@ public abstract class ExcelTo extends Thread {
 			if (!serverMap.isEmpty())
 				resultsServer.add(serverMap);
 			if (!clientMap.isEmpty())
-				resultsClient.add(clientMap);
+				resultsServer.add(clientMap);
 		}//for 行结束
 		if (subsn != null) {//是子表 则返回子表数据
 			return subMap;

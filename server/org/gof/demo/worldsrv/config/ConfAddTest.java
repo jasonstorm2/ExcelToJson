@@ -30,23 +30,21 @@ import org.gof.core.support.SysException;
 import org.gof.core.support.Utils;
 
 /**
- * 添加|Add2 
- * Adds.xlsx
+ * zhCN
+ * AddTest.xlsx
  * @author System
  * 此类是系统自动生成类 不要直接修改，修改后也会被覆盖
  */
 @ConfigJSON
-public class ConfAdd2 {
-	public final int sn;			//序号
-	public final String subSub;			//关联的表格
-	public final String color;			//颜色
-	public final String size;			//大小
+public class ConfAddTest {
+	public final int sn;			//天数
+	public final String sub1;			//关联的表格
+	public final int[] QuestSn;			//任务Sn
 
-	public ConfAdd2(int sn, String subSub, String color, String size) {
+	public ConfAddTest(int sn, String sub1, int[] QuestSn) {
 			this.sn = sn;		
-			this.subSub = subSub;		
-			this.color = color;		
-			this.size = size;		
+			this.sub1 = sub1;		
+			this.QuestSn = QuestSn;		
 	}
 
 	public static void reLoad() {
@@ -57,7 +55,7 @@ public class ConfAdd2 {
 	 * 获取全部数据
 	 * @return
 	 */
-	public static Collection<ConfAdd2> findAll() {
+	public static Collection<ConfAddTest> findAll() {
 		return DATA.getList();
 	}
 
@@ -75,7 +73,7 @@ public class ConfAdd2 {
 	 * @param sn
 	 * @return
 	 */
-	public static ConfAdd2 get(Integer sn) {
+	public static ConfAddTest get(Integer sn) {
 		if(DATA.getMap().containsKey(sn)) {
 			return DATA.getMap().get(sn);
 		} else {
@@ -88,8 +86,8 @@ public class ConfAdd2 {
 	 * @param params
 	 * @return
 	 */
-	public static ConfAdd2 getBy(Object...params) {
-		List<ConfAdd2> list = utilBase(params);
+	public static ConfAddTest getBy(Object...params) {
+		List<ConfAddTest> list = utilBase(params);
 		
 		if(list.isEmpty()) return null;
 		else return list.get(0);
@@ -100,7 +98,7 @@ public class ConfAdd2 {
 	 * @param params
 	 * @return
 	 */
-	public static List<ConfAdd2> findBy(Object...params) {
+	public static List<ConfAddTest> findBy(Object...params) {
 		return utilBase(params);
 	}
 	
@@ -109,7 +107,7 @@ public class ConfAdd2 {
 	 * @param params
 	 * @return
 	 */
-	public static List<ConfAdd2> utilBase(Object...params) {
+	public static List<ConfAddTest> utilBase(Object...params) {
 		List<Object> settings = Utils.ofList(params);
 		
 		//查询参数
@@ -138,11 +136,11 @@ public class ConfAdd2 {
 		}
 		
 		//返回结果
-		List<ConfAdd2> result = new ArrayList<>();
+		List<ConfAddTest> result = new ArrayList<>();
 		
 		try {
 			//通过条件获取结果
-			for(ConfAdd2 c : DATA.getList()) {
+			for(ConfAddTest c : DATA.getList()) {
 				//本行数据是否符合过滤条件
 				boolean bingo = true;
 				
@@ -172,10 +170,10 @@ public class ConfAdd2 {
 		}
 		
 		//对结果进行排序
-		Collections.sort(result, new Comparator<ConfAdd2>() {
+		Collections.sort(result, new Comparator<ConfAddTest>() {
 			@Override
 			@SuppressWarnings({ "rawtypes", "unchecked" })
-			public int compare(ConfAdd2 a, ConfAdd2 b) {
+			public int compare(ConfAddTest a, ConfAddTest b) {
 				try {
 					for(Entry<String, OrderBy> e : paramsOrder.entrySet()) {
 						//两方字段
@@ -211,10 +209,9 @@ public class ConfAdd2 {
 	 * 属性关键字
 	 */
 	public static final class K {
-		public static final String sn = "sn";	//序号
-		public static final String subSub = "subSub";	//关联的表格
-		public static final String color = "color";	//颜色
-		public static final String size = "size";	//大小
+		public static final String sn = "sn";	//天数
+		public static final String sub1 = "sub1";	//关联的表格
+		public static final String QuestSn = "QuestSn";	//任务Sn
 	}
 
 	/**
@@ -224,13 +221,13 @@ public class ConfAdd2 {
 	 */
 	private static final class DATA {
 		//全部数据
-		private static volatile Map<Integer, ConfAdd2> _map;
+		private static volatile Map<Integer, ConfAddTest> _map;
 		
 		/**
 		 * 获取数据的值集合
 		 * @return
 		 */
-		public static Collection<ConfAdd2> getList() {
+		public static Collection<ConfAddTest> getList() {
 			return getMap().values();
 		}
 		
@@ -238,7 +235,7 @@ public class ConfAdd2 {
 		 * 获取Map类型数据集合
 		 * @return
 		 */
-		public static Map<Integer, ConfAdd2> getMap() {
+		public static Map<Integer, ConfAddTest> getMap() {
 			//延迟初始化
 			if(_map == null) {
 				synchronized (DATA.class) {
@@ -254,7 +251,7 @@ public class ConfAdd2 {
 		 * 初始化数据
 		 */
 		private static void _init() {
-			Map<Integer, ConfAdd2> dataMap = new HashMap<>();
+			Map<Integer, ConfAddTest> dataMap = new HashMap<>();
 			
 			//JSON数据
 			String confJSON = _readConfFile();
@@ -264,7 +261,7 @@ public class ConfAdd2 {
 			JSONArray confs = (JSONArray)JSONArray.parse(confJSON);
 			for(int i = 0 ; i < confs.size() ; i++){
 				JSONObject conf = confs.getJSONObject(i);
-				ConfAdd2 object = new ConfAdd2(conf.getIntValue("sn"), conf.getString("subSub"), conf.getString("color"), conf.getString("size"));
+				ConfAddTest object = new ConfAddTest(conf.getIntValue("sn"), conf.getString("sub1"), parseIntArray(conf.getString("QuestSn")));
 				dataMap.put(conf.getInteger("sn"), object);
 			}
 
@@ -364,17 +361,17 @@ public class ConfAdd2 {
 			try {
 				FileInputStream fis = null;
 				InputStreamReader isr = null;
-				String baseBath = ConfAdd2.class.getResource("").getPath();
-				File file = new File(baseBath + "json/ConfAdd2.json");
+				String baseBath = ConfAddTest.class.getResource("").getPath();
+				File file = new File(baseBath + "json/ConfAddTest.json");
 				
 				if(!file.exists()) { //运行路径没有，到jar包外部找
 					baseBath = baseBath.substring(6, baseBath.indexOf("libs"));//去掉前6个字符"file:/"，否则找不到
 					baseBath += "classes/";
-					file = new File(baseBath + "json/ConfAdd2.json");
+					file = new File(baseBath + "json/ConfAddTest.json");
 					if(!file.exists()) { //JAR包外部没有，到JAR包内部找
     					String currentJarPath = URLDecoder.decode(ConfMap.class.getProtectionDomain().getCodeSource().getLocation().getFile(), "UTF-8"); //获取当前Jar文件名
 						JarFile currentJar = new java.util.jar.JarFile(currentJarPath);
-						JarEntry dbEntry = currentJar.getJarEntry("org/gof/demo/worldsrv/config/" + "json/ConfAdd2.json");
+						JarEntry dbEntry = currentJar.getJarEntry("org/gof/demo/worldsrv/config/" + "json/ConfAddTest.json");
 						InputStream is = currentJar.getInputStream(dbEntry);
 						isr = new InputStreamReader(is, "UTF-8");
 					} else {

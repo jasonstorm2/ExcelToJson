@@ -30,21 +30,21 @@ import org.gof.core.support.SysException;
 import org.gof.core.support.Utils;
 
 /**
- * 添加|Add3 
- * Adds.xlsx
+ * zhCN
+ * Adds_添加.xlsx
  * @author System
  * 此类是系统自动生成类 不要直接修改，修改后也会被覆盖
  */
 @ConfigJSON
-public class ConfAdd3 {
-	public final int sn;			//序号
-	public final String male;			//颜色
-	public final String country;			//大小
+public class ConfAdds {
+	public final int sn;			//天数
+	public final String tit;			//标题
+	public final int what;			//数值
 
-	public ConfAdd3(int sn, String male, String country) {
+	public ConfAdds(int sn, String tit, int what) {
 			this.sn = sn;		
-			this.male = male;		
-			this.country = country;		
+			this.tit = tit;		
+			this.what = what;		
 	}
 
 	public static void reLoad() {
@@ -55,7 +55,7 @@ public class ConfAdd3 {
 	 * 获取全部数据
 	 * @return
 	 */
-	public static Collection<ConfAdd3> findAll() {
+	public static Collection<ConfAdds> findAll() {
 		return DATA.getList();
 	}
 
@@ -73,7 +73,7 @@ public class ConfAdd3 {
 	 * @param sn
 	 * @return
 	 */
-	public static ConfAdd3 get(Integer sn) {
+	public static ConfAdds get(Integer sn) {
 		if(DATA.getMap().containsKey(sn)) {
 			return DATA.getMap().get(sn);
 		} else {
@@ -86,8 +86,8 @@ public class ConfAdd3 {
 	 * @param params
 	 * @return
 	 */
-	public static ConfAdd3 getBy(Object...params) {
-		List<ConfAdd3> list = utilBase(params);
+	public static ConfAdds getBy(Object...params) {
+		List<ConfAdds> list = utilBase(params);
 		
 		if(list.isEmpty()) return null;
 		else return list.get(0);
@@ -98,7 +98,7 @@ public class ConfAdd3 {
 	 * @param params
 	 * @return
 	 */
-	public static List<ConfAdd3> findBy(Object...params) {
+	public static List<ConfAdds> findBy(Object...params) {
 		return utilBase(params);
 	}
 	
@@ -107,7 +107,7 @@ public class ConfAdd3 {
 	 * @param params
 	 * @return
 	 */
-	public static List<ConfAdd3> utilBase(Object...params) {
+	public static List<ConfAdds> utilBase(Object...params) {
 		List<Object> settings = Utils.ofList(params);
 		
 		//查询参数
@@ -136,11 +136,11 @@ public class ConfAdd3 {
 		}
 		
 		//返回结果
-		List<ConfAdd3> result = new ArrayList<>();
+		List<ConfAdds> result = new ArrayList<>();
 		
 		try {
 			//通过条件获取结果
-			for(ConfAdd3 c : DATA.getList()) {
+			for(ConfAdds c : DATA.getList()) {
 				//本行数据是否符合过滤条件
 				boolean bingo = true;
 				
@@ -170,10 +170,10 @@ public class ConfAdd3 {
 		}
 		
 		//对结果进行排序
-		Collections.sort(result, new Comparator<ConfAdd3>() {
+		Collections.sort(result, new Comparator<ConfAdds>() {
 			@Override
 			@SuppressWarnings({ "rawtypes", "unchecked" })
-			public int compare(ConfAdd3 a, ConfAdd3 b) {
+			public int compare(ConfAdds a, ConfAdds b) {
 				try {
 					for(Entry<String, OrderBy> e : paramsOrder.entrySet()) {
 						//两方字段
@@ -209,9 +209,9 @@ public class ConfAdd3 {
 	 * 属性关键字
 	 */
 	public static final class K {
-		public static final String sn = "sn";	//序号
-		public static final String male = "male";	//颜色
-		public static final String country = "country";	//大小
+		public static final String sn = "sn";	//天数
+		public static final String tit = "tit";	//标题
+		public static final String what = "what";	//数值
 	}
 
 	/**
@@ -221,13 +221,13 @@ public class ConfAdd3 {
 	 */
 	private static final class DATA {
 		//全部数据
-		private static volatile Map<Integer, ConfAdd3> _map;
+		private static volatile Map<Integer, ConfAdds> _map;
 		
 		/**
 		 * 获取数据的值集合
 		 * @return
 		 */
-		public static Collection<ConfAdd3> getList() {
+		public static Collection<ConfAdds> getList() {
 			return getMap().values();
 		}
 		
@@ -235,7 +235,7 @@ public class ConfAdd3 {
 		 * 获取Map类型数据集合
 		 * @return
 		 */
-		public static Map<Integer, ConfAdd3> getMap() {
+		public static Map<Integer, ConfAdds> getMap() {
 			//延迟初始化
 			if(_map == null) {
 				synchronized (DATA.class) {
@@ -251,7 +251,7 @@ public class ConfAdd3 {
 		 * 初始化数据
 		 */
 		private static void _init() {
-			Map<Integer, ConfAdd3> dataMap = new HashMap<>();
+			Map<Integer, ConfAdds> dataMap = new HashMap<>();
 			
 			//JSON数据
 			String confJSON = _readConfFile();
@@ -261,7 +261,7 @@ public class ConfAdd3 {
 			JSONArray confs = (JSONArray)JSONArray.parse(confJSON);
 			for(int i = 0 ; i < confs.size() ; i++){
 				JSONObject conf = confs.getJSONObject(i);
-				ConfAdd3 object = new ConfAdd3(conf.getIntValue("sn"), conf.getString("male"), conf.getString("country"));
+				ConfAdds object = new ConfAdds(conf.getIntValue("sn"), conf.getString("tit"), conf.getIntValue("what"));
 				dataMap.put(conf.getInteger("sn"), object);
 			}
 
@@ -361,17 +361,17 @@ public class ConfAdd3 {
 			try {
 				FileInputStream fis = null;
 				InputStreamReader isr = null;
-				String baseBath = ConfAdd3.class.getResource("").getPath();
-				File file = new File(baseBath + "json/ConfAdd3.json");
+				String baseBath = ConfAdds.class.getResource("").getPath();
+				File file = new File(baseBath + "json/ConfAdds.json");
 				
 				if(!file.exists()) { //运行路径没有，到jar包外部找
 					baseBath = baseBath.substring(6, baseBath.indexOf("libs"));//去掉前6个字符"file:/"，否则找不到
 					baseBath += "classes/";
-					file = new File(baseBath + "json/ConfAdd3.json");
+					file = new File(baseBath + "json/ConfAdds.json");
 					if(!file.exists()) { //JAR包外部没有，到JAR包内部找
     					String currentJarPath = URLDecoder.decode(ConfMap.class.getProtectionDomain().getCodeSource().getLocation().getFile(), "UTF-8"); //获取当前Jar文件名
 						JarFile currentJar = new java.util.jar.JarFile(currentJarPath);
-						JarEntry dbEntry = currentJar.getJarEntry("org/gof/demo/worldsrv/config/" + "json/ConfAdd3.json");
+						JarEntry dbEntry = currentJar.getJarEntry("org/gof/demo/worldsrv/config/" + "json/ConfAdds.json");
 						InputStream is = currentJar.getInputStream(dbEntry);
 						isr = new InputStreamReader(is, "UTF-8");
 					} else {
