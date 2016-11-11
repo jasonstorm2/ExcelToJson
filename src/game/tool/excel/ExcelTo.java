@@ -41,7 +41,7 @@ public abstract class ExcelTo extends Thread {
 	private final String  SUB = "sub";  //母表中子表的标志
 	private final String SUBSN = "subsn";//母表中子表sn标志
 	
-	private int executeType = 1;//1：大领主编译表格模式 2：EVA编译表格模式
+	private int executeType = 2;//1：大领主编译表格模式 2：EVA编译表格模式
 	
 	
 	
@@ -213,6 +213,15 @@ public abstract class ExcelTo extends Thread {
 		this.showMsgFront("\n===处理成功个数：" + numSucc);
 		if (numError > 0)
 			this.showMsgFront("\n===处理失败个数：" + numError);
+		if (numError == 0) {
+		      try {
+		        Thread.sleep(1000L);
+		      }
+		      catch (InterruptedException e) {
+		        e.printStackTrace();
+		      }
+		      System.exit(0);
+		    }
 	}
 	
 
@@ -276,6 +285,8 @@ public abstract class ExcelTo extends Thread {
 				// 处理sheet的数据
 				Sheet sheet = workbook.getSheet(language);
 				if(sheet == null){
+					this.showMsgFront("===处理<" + excelFile + ">时异常，原因: " + "表名没按照规则填写" + "    ->右键打开错误文件\n");
+					this.addErrorFile(excelFile);
 					return ret;
 				}
 				this.processSheet(sheet, excelFile);
