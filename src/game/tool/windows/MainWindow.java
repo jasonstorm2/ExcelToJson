@@ -481,7 +481,7 @@ public class MainWindow extends DropDragJFrame {
 	 */
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 		showMsg.setText("");
-
+		System.out.println("user.dir路径是："+path);
 		et = new ExcelToServer(
 				path + "/" + confPath.getText(),   //配置文件所在路径(要解析的Excel路径)
 				path + "/" + serverPath.getText(), //数据和生成的java类的路径
